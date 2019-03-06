@@ -1,0 +1,17 @@
+modelview-diff-editor-component {
+	height: 100%;
+	width : 100%;
+	display: block;
+	/* background-color: var(--vscode-diffEditor-insertedTextBackground, rgba(255, 0, 0, 0.2));
+	background: var(--vscode-diffEditor-insertedTextBackground, rgba(255, 0, 0, 0.2));
+	background-color: var(--vscode-diffEditor-removedTextBackground, rgba(155, 185, 85, 0.2));
+	background: var(--vscode-diffEditor-removedTextBackground, rgba(155, 185, 85, 0.2)); */
+}
+
+.monaco-diff-editor .line-delete, .monaco-diff-editor .char-delete {
+    background-color:  rgba(155, 185, 85, 0.2) !important;
+}
+
+.monaco-diff-editor .line-insert, .monaco-diff-editor .char-insert {
+    background-color: rgba(255, 0, 0, 0.2) !important;
+}

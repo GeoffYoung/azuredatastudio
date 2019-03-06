@@ -24,6 +24,8 @@ export class SelectOperationPage extends BasePage {
 	private importRadioButton: sqlops.RadioButtonComponent;
 	private exportRadioButton: sqlops.RadioButtonComponent;
 	private form: sqlops.FormContainer;
+	private diffEditor: sqlops.DiffEditorComponent;
+	private flexModel: sqlops.FlexContainer;
 
 	public constructor(instance: DataTierApplicationWizard, wizardPage: sqlops.window.WizardPage, model: DacFxDataModel, view: sqlops.ModelView) {
 		super();
@@ -39,18 +41,32 @@ export class SelectOperationPage extends BasePage {
 		let importComponent = await this.createImportRadioButton();
 		let exportComponent = await this.createExportRadioButton();
 
-		this.form = this.view.modelBuilder.formContainer()
-			.withFormItems(
-				[
-					deployComponent,
-					extractComponent,
-					importComponent,
-					exportComponent
-				], {
-					horizontal: true
-				}).component();
-		await this.view.initializeModel(this.form);
+		this.diffEditor = this.view.modelBuilder.diffeditor().withProperties({
+			contentLeft: 'test\n',
+			contentRight: 'asdf\n',
+		}).component();
 
+		// this.form = this.view.modelBuilder.formContainer()
+		// 	.withFormItems(
+		// 		[
+		// 			{
+		// 				component: this.diffEditor,
+		// 				title: 'diffeditor'
+		// 			}
+		// 		], {
+		// 			horizontal: true
+		// 		}).component();
+		// await this.view.initializeModel(this.form);
+		this.flexModel = this.view.modelBuilder.flexContainer().component();
+		this.flexModel.addItem(this.diffEditor, { flex: '1 1' });
+
+		this.flexModel.setLayout({
+			flexFlow: 'column',
+			alignItems: 'stretch',
+			height: '100%'
+		});
+
+		await this.view.initializeModel(this.flexModel);
 		// default have the first radio button checked
 		this.deployRadioButton.checked = true;
 		this.instance.setDoneButton(Operation.deploy);
